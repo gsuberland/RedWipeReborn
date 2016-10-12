@@ -41,65 +41,80 @@ namespace RedWipeReborn
         /// </summary>
         private void InitializeComponent()
         {
+            this.UserNameTextBox = new System.Windows.Forms.TextBox();
+            this.UserNameLabel = new System.Windows.Forms.Label();
+            this.PasswordLabel = new System.Windows.Forms.Label();
+            this.PasswordTextBox = new System.Windows.Forms.TextBox();
+            this.LoginButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // LoginForm
+            // UserNameTextBox
             // 
-            this.UserNameTextBox = new TextBox();
-            this.UserNameLabel = new Label();
-            this.PasswordLabel = new Label();
-            this.PasswordTextBox = new TextBox();
-            this.LoginButton = new Button();
-            base.SuspendLayout();
             this.UserNameTextBox.AcceptsReturn = true;
-            this.UserNameTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            this.UserNameTextBox.Location = new Point(12, 25);
+            this.UserNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.UserNameTextBox.Location = new System.Drawing.Point(12, 25);
             this.UserNameTextBox.Name = "UserNameTextBox";
             this.UserNameTextBox.Size = new System.Drawing.Size(374, 20);
             this.UserNameTextBox.TabIndex = 0;
+            // 
+            // UserNameLabel
+            // 
             this.UserNameLabel.AutoSize = true;
-            this.UserNameLabel.Location = new Point(12, 9);
+            this.UserNameLabel.Location = new System.Drawing.Point(12, 9);
             this.UserNameLabel.Name = "UserNameLabel";
             this.UserNameLabel.Size = new System.Drawing.Size(58, 13);
             this.UserNameLabel.TabIndex = 1;
             this.UserNameLabel.Text = "Username:";
+            // 
+            // PasswordLabel
+            // 
             this.PasswordLabel.AutoSize = true;
-            this.PasswordLabel.Location = new Point(12, 48);
+            this.PasswordLabel.Location = new System.Drawing.Point(12, 48);
             this.PasswordLabel.Name = "PasswordLabel";
             this.PasswordLabel.Size = new System.Drawing.Size(53, 13);
             this.PasswordLabel.TabIndex = 3;
             this.PasswordLabel.Text = "Password";
+            // 
+            // PasswordTextBox
+            // 
             this.PasswordTextBox.AcceptsReturn = true;
-            this.PasswordTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            this.PasswordTextBox.Location = new Point(12, 64);
+            this.PasswordTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.PasswordTextBox.Location = new System.Drawing.Point(12, 64);
             this.PasswordTextBox.Name = "PasswordTextBox";
             this.PasswordTextBox.PasswordChar = '*';
             this.PasswordTextBox.Size = new System.Drawing.Size(374, 20);
             this.PasswordTextBox.TabIndex = 2;
             this.PasswordTextBox.UseSystemPasswordChar = true;
-            this.LoginButton.Location = new Point(311, 100);
+            // 
+            // LoginButton
+            // 
+            this.LoginButton.Location = new System.Drawing.Point(311, 100);
             this.LoginButton.Name = "LoginButton";
             this.LoginButton.Size = new System.Drawing.Size(75, 23);
             this.LoginButton.TabIndex = 4;
             this.LoginButton.Text = "Login";
             this.LoginButton.UseVisualStyleBackColor = true;
-            this.LoginButton.Click += this.LoginButton_Click;
-            base.AutoScaleDimensions = new SizeF(6f, 13f);
-            base.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            base.ClientSize = new System.Drawing.Size(398, 135);
-            base.Controls.Add(this.LoginButton);
-            base.Controls.Add(this.PasswordLabel);
-            base.Controls.Add(this.PasswordTextBox);
-            base.Controls.Add(this.UserNameLabel);
-            base.Controls.Add(this.UserNameTextBox);
-            base.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            base.MaximizeBox = false;
-            base.Name = "LoginForm";
-            base.StartPosition = FormStartPosition.CenterScreen;
+            this.LoginButton.Click += new System.EventHandler(this.LoginButton_Click);
+            // 
+            // LoginForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(398, 135);
+            this.Controls.Add(this.LoginButton);
+            this.Controls.Add(this.PasswordLabel);
+            this.Controls.Add(this.PasswordTextBox);
+            this.Controls.Add(this.UserNameLabel);
+            this.Controls.Add(this.UserNameTextBox);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.Name = "LoginForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "RedWipe Reborn";
-            base.Load += this.MainForm_Load;
-            base.ResumeLayout(false);
-            base.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

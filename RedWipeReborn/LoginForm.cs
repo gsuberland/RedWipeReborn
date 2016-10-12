@@ -55,18 +55,18 @@ namespace RedWipeReborn
                     bool flag = await Program.Engine.LoginAsync(this.UserNameTextBox.Text, this.PasswordTextBox.Text);
                     if (!flag)
                     {
-                        MessageBox.Show("An error occured while trying to log in. Check your username and password.");
+                        MessageBox.Show("An error occured while trying to log in. Check your username and password.", "Login Successful", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     else
                     {
                         this.SaveCredentials();
+                        MessageBox.Show("Login successful. This next stage will download a list of all your posts and comments.\n\nNo deletion will be performed until you review the content and accept the deletion warnings.", "Login Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.MoveNext();
                     }
                 }
-                catch (Exception exception1)
+                catch (Exception exception)
                 {
-                    Exception exception = exception1;
-                    MessageBox.Show(string.Format("Unexpected exception: {0}\n{1}\n\nStack Trace:\n{2}", exception.GetType().Name, exception.Message, exception.StackTrace));
+                    MessageBox.Show(string.Format("Unexpected exception: {0}\n{1}\n\nStack Trace:\n{2}", exception.GetType().Name, exception.Message, exception.StackTrace), "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             finally
@@ -81,7 +81,7 @@ namespace RedWipeReborn
 
         private void MoveNext()
         {
-            Program.NextForm = new ReviewForm();
+            Program.NextForm = new DownloadForm();
             Program.NextForm.MatchCenterFrom(this);
             base.Close();
         }
@@ -90,5 +90,6 @@ namespace RedWipeReborn
         {
             SecurePasswordStorage.SaveCredentials(this.UserNameTextBox.Text, this.PasswordTextBox.Text);
         }
+        
     }
 }

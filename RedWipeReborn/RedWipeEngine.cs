@@ -7,6 +7,8 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Security.Authentication;
 using System.Threading.Tasks;
+using System.Net;
+using System.IO;
 
 namespace RedWipeReborn
 {
@@ -20,14 +22,16 @@ namespace RedWipeReborn
 
             public CredentialsWrapper(string username, string password)
             {
-                this.Username = username;
-                this.Password = password;
+                Username = username;
+                Password = password;
             }
         }
 
         public const int MaximumHistory = 1000;
 
-		private Reddit _reddit;
+        public const string ExemptionURL = @"https://raw.githubusercontent.com/gsuberland/RedWipeReborn/master/EXEMPT";
+
+        private Reddit _reddit;
 
 		private bool _loggedIn = false;
 
@@ -35,35 +39,82 @@ namespace RedWipeReborn
 		{
 			get
 			{
-				return this._loggedIn;
+				return _loggedIn;
 			}
 		}
 
 		public RedWipeEngine()
 		{
-			this._reddit = new Reddit(true);
+			_reddit = new Reddit(true);
 		}
 
-		private IEnumerable<Comment> DoGetAllComments()
+        public async Task<string[]> GetSubredditExceptionsAsync()
+        {
+            var exceptions = new List<string>();
+
+            using (var wc = new WebClient())
+            {
+                string exemptionData = await wc.DownloadStringTaskAsync(new Uri(ExemptionURL));
+                using (var reader = new StringReader(exemptionData))
+                {
+                    string line;
+                    while ((line = await reader.ReadLineAsync()) != null)
+                    {
+                        // ignore comment lines and blank lines
+                        if (line.StartsWith("#") || string.IsNullOrWhiteSpace(line))
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            exceptions.Add(line);
+                        }
+                    }
+                }
+            }
+
+            return exceptions.ToArray();
+        }
+
+        private Comment[] DoGetAllComments()
 		{
-			if (!this._loggedIn)
+			if (!_loggedIn)
 			{
 				throw new InvalidOperationException("Must log in first!");
 			}
-			Listing<Comment> comments = this._reddit.User.GetComments(Sort.New, MaximumHistory, FromTime.All);
-			return comments.AsEnumerable<Comment>();
+
+            return _reddit.User.Comments.ToArray();
 		}
 
-		private bool DoLogin(CredentialsWrapper creds)
+        public Task<Comment[]> GetAllCommentsAsync()
+        {
+            return Task.Factory.StartNew<Comment[]>(() => DoGetAllComments());
+        }
+
+        private Post[] DoGetAllPosts()
+        {
+            if (!_loggedIn)
+            {
+                throw new InvalidOperationException("Must log in first!");
+            }
+            return _reddit.User.Posts.ToArray();
+        }
+
+        public Task<Post[]> GetAllPostsAsync()
+        {
+            return Task.Factory.StartNew<Post[]>(() => DoGetAllPosts());
+        }
+
+        private bool DoLogin(CredentialsWrapper creds)
 		{
 			bool flag;
 			try
 			{
 				try
 				{
-					this._loggedIn = false;
-					this._reddit.LogIn(creds.Username, creds.Password, true);
-					this._loggedIn = true;
+					_loggedIn = false;
+					_reddit.LogIn(creds.Username, creds.Password, true);
+					_loggedIn = true;
 					flag = true;
 				}
 				catch (TargetInvocationException targetInvocationException)
@@ -87,15 +138,10 @@ namespace RedWipeReborn
 			return flag;
 		}
 
-		public Task<IEnumerable<Comment>> GetAllCommentsAsync()
-		{
-			return Task.Factory.StartNew<IEnumerable<Comment>>(() => this.DoGetAllComments());
-		}
-
 		public Task<bool> LoginAsync(string username, string password)
 		{
 			Task<bool> task = Task.Factory.StartNew<bool>(
-                (object o) => this.DoLogin((CredentialsWrapper)o),
+                (object o) => DoLogin((CredentialsWrapper)o),
                 new CredentialsWrapper(username, password));
 
 			return task;
@@ -103,7 +149,7 @@ namespace RedWipeReborn
 
 		public void Logout()
 		{
-			this._loggedIn = false;
+			_loggedIn = false;
 		}
 	}
 }
