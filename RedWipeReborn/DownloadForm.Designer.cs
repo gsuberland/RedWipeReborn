@@ -85,7 +85,7 @@ namespace RedWipeReborn
             this.Name = "DownloadForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ReviewForm";
-            this.Load += new System.EventHandler(this.ReviewForm_Load);
+            this.Load += new System.EventHandler(this.DownloadForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
