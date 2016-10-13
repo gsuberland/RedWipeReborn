@@ -6,6 +6,8 @@ RedWipe Reborn is a re-write and continuation of the [Red Wipe](https://github.c
 
 Reddit has stated in the past that deleting your comments does not prevent a "ghost" copy of the final comment text from remaining saved on their servers, possibly even if you deactivate your account. This utility is designed to automatically remove your last 1000 Reddit posts, and all comments, permenantly.
 
+**RedWipe Reborn is currently under development. It is not finished. There is no release available yet.**
+
 ## How it works
 
 RedWipe Reborn uses the Reddit API to download a list of your comments and posts. After enumerating all content possible, it performs the following actions:
